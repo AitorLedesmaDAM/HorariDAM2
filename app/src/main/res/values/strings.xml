@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">HorariDAM</string>
+    <string name="action_settings">Settings</string>
+    <string-array name="grup">
+        <item>A1</item>
+        <item>A2</item>
+    </string-array>
+
+    <string-array name="fons">
+        <item>Blanc</item>
+        <item>Gris</item>
+        <item>Blau</item>
+    </string-array>
+</resources>
