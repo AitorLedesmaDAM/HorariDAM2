@@ -24,10 +24,13 @@ public class HorarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.result_main);
         
-        SharedPreferences prefs = getSharedPreferences("HorarioApp", Context.MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("HorariDAM", Context.MODE_PRIVATE);
         
         String fons = prefs.getString("fons", "Blanc");
         String grup = prefs.getString("grup", "A1");
+
+
+
 
         canviarFons(fons);
         ferSelect(grup);
@@ -47,8 +50,8 @@ public class HorarioActivity extends AppCompatActivity {
             case "Gris":
                 result.setBackgroundColor(Color.GRAY);
                 break;
-            case "Blau":
-                result.setBackgroundColor(Color.BLUE);
+            case "Groc":
+                result.setBackgroundColor(Color.YELLOW);
                 break;
 
         }
@@ -63,6 +66,7 @@ public class HorarioActivity extends AppCompatActivity {
     public void ferSelect(String grup) {
         int hora = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         int minut = Calendar.getInstance().get(Calendar.MINUTE);
+        int segon = Calendar.getInstance().get(Calendar.SECOND);
 
         int dia = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         int diaSetmana = dia - 1;
@@ -72,15 +76,37 @@ public class HorarioActivity extends AppCompatActivity {
         db = sql.getWritableDatabase();
         
         if (db != null) {
-            Cursor c = db.rawQuery("SELECT cod_asignatura FROM Horario WHERE ('" + hora + ":" + minut + "' BETWEEN hora_inicio AND hora_fin) AND grupo = " + grup +" AND dia = '" + diaSetmana + "'", null);
+            Cursor c = db.rawQuery("SELECT cod_asignatura, hora_inicio, hora_fin FROM Horario WHERE ('" + hora + ":" + minut + ":" + segon + "' BETWEEN hora_inicio AND hora_fin) AND grupo = '" + grup + "' AND dia = '" + diaSetmana + "'", null);
             if (c.moveToFirst()) {
                 do {
                     String codAsignatura = c.getString(0);
+                    String hora_inici = c.getString(1);
+                    String hora_fi = c.getString(2);
                     String nomAsignatura = asignatura(codAsignatura);
                     String codProfesor = codProfessor(codAsignatura);
-                    String nomProfesor = numProfessor(codProfesor);
+                    String nomProfesor = nomProfessor(codProfesor);
 
-                    MostrarLayout(codAsignatura, nomAsignatura, nomProfesor);
+                    if (codAsignatura == ""){
+
+                        TextView tvCodAsign = (TextView) findViewById(R.id.tvCodAsignatura);
+                        tvCodAsign.setText("No tens classe!!");
+
+                    }else {
+                        TextView tvNomAsign = (TextView) findViewById(R.id.tvNomAsignatura);
+                        tvNomAsign.setText(nomAsignatura);
+
+                        TextView tvCodAsign = (TextView) findViewById(R.id.tvCodAsignatura);
+                        tvCodAsign.setText(codAsignatura);
+
+                        TextView tvNomProf = (TextView) findViewById(R.id.tvNomProfesor);
+                        tvNomProf.setText(nomProfesor);
+
+                        TextView tvHoraInici = (TextView) findViewById(R.id.tvHoraInici);
+                        tvHoraInici.setText(hora_inici);
+
+                        TextView tvHoraFi = (TextView) findViewById(R.id.tvHoraFi);
+                        tvHoraFi.setText(hora_fi);
+                    }
                 } while (c.moveToNext());
             }
         }
@@ -110,7 +136,7 @@ public class HorarioActivity extends AppCompatActivity {
      */
     public String codProfessor(String cod_asignatura) {
         String cod = "";
-        Cursor c = db.rawQuery("SELECT codProfessor FROM Asignatura WHERE '" + cod_asignatura + "' LIKE cod_asignatura", null);
+        Cursor c = db.rawQuery("SELECT cod_profesor FROM Asignatura WHERE '" + cod_asignatura + "' LIKE cod_asignatura", null);
         if (c.moveToFirst()) {
             do {
                 cod = c.getString(0);
@@ -124,31 +150,15 @@ public class HorarioActivity extends AppCompatActivity {
      * @param codProfessor
      * @return nom del profesor
      */
-    public String numProfessor(String codProfessor) {
+    public String nomProfessor(String codProfessor) {
         String nom = "";
-        Cursor c = db.rawQuery("SELECT nombre FROM Profesor WHERE '" + codProfessor + "' LIKE codProfessor", null);
+        Cursor c = db.rawQuery("SELECT nombre FROM Profesor WHERE '" + codProfessor + "' LIKE cod_profesor", null);
         if (c.moveToFirst()) {
             do {
                 nom = c.getString(0);
             } while (c.moveToNext());
         }
         return nom;
-    }
-
-
-    /**
-     * Es passen tots els tv que s'han de mostrar al layout y s'assignen
-     * @param codAsignatura
-     * @param nomAsignatura
-     * @param nomProfesor
-     */
-    public void MostrarLayout(String codAsignatura, String nomAsignatura, String nomProfesor) {
-        TextView idAsign = (TextView) findViewById(R.id.tvNomAsignatura);
-        idAsign.setText(nomAsignatura);
-        TextView nomAsig = (TextView) findViewById(R.id.tvCodAsignatura);
-        nomAsig.setText(codAsignatura);
-        TextView nomProf = (TextView) findViewById(R.id.tvNomProfesor);
-        nomProf.setText(nomProfesor);
     }
 }
 

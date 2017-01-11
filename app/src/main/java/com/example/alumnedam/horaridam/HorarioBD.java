@@ -31,13 +31,13 @@ public class HorarioBD extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO Profesor (cod_profesor, nombre) VALUES (4, 'Lluis Perpiñà')");
         db.execSQL("INSERT INTO Profesor (cod_profesor, nombre) VALUES (5, 'Marta Planas')");
 
-        db.execSQL("INSERT INTO Asignatura (codigo, nombre, cod_profesor) VALUES ('M05/M02/M06', 'Entorns de desenvolupament/Bases de dades/Accés a dades', 1)");
-        db.execSQL("INSERT INTO Asignatura (codigo, nombre, cod_profesor) VALUES ('M03', 'Programació bàsica', 2)");
-        db.execSQL("INSERT INTO Asignatura (codigo, nombre, cod_profesor) VALUES ('M07', 'Desenvolupament d'interficíes', 3)");
-        db.execSQL("INSERT INTO Asignatura (codigo, nombre, cod_profesor) VALUES ('M08', 'Programació multimèdia i dispositius mòbils', 4)");
-        db.execSQL("INSERT INTO Asignatura (codigo, nombre, cod_profesor) VALUES ('M09', 'Programació de serveis i processos', 1)");
-        db.execSQL("INSERT INTO Asignatura (codigo, nombre, cod_profesor) VALUES ('M10', 'Sistemes de gestió empresarial', 5)");
-        db.execSQL("INSERT INTO Asignatura (codigo, nombre, cod_profesor) VALUES ('M11', 'Tutoria', 2)");
+        db.execSQL("INSERT INTO Asignatura (cod_asignatura, nombre, cod_profesor) VALUES ('M05/M02/M06', 'Entorns de desenvolupament/Bases de dades/Accés a dades', 1)");
+        db.execSQL("INSERT INTO Asignatura (cod_asignatura, nombre, cod_profesor) VALUES ('M03', 'Programació bàsica', 2)");
+        db.execSQL("INSERT INTO Asignatura (cod_asignatura, nombre, cod_profesor) VALUES ('M07', 'Desenvolupament de interficíes', 3)");
+        db.execSQL("INSERT INTO Asignatura (cod_asignatura, nombre, cod_profesor) VALUES ('M08', 'Programació multimèdia i dispositius mòbils', 4)");
+        db.execSQL("INSERT INTO Asignatura (cod_asignatura, nombre, cod_profesor) VALUES ('M09', 'Programació de serveis i processos', 1)");
+        db.execSQL("INSERT INTO Asignatura (cod_asignatura, nombre, cod_profesor) VALUES ('M10', 'Sistemes de gestió empresarial', 5)");
+        db.execSQL("INSERT INTO Asignatura (cod_asignatura, nombre, cod_profesor) VALUES ('M11', 'Tutoria', 2)");
 
 
         //SUBGRUPO A2

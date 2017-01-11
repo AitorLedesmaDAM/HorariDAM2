@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if (view.getId() == R.id.btnAceptar) {
             Intent i = new Intent(this, HorarioActivity.class);
-            startActivity(i);
+
+
             Spinner spGrup = (Spinner) findViewById(R.id.spinnerGrup);
             Spinner spFons = (Spinner) findViewById(R.id.spinnerFons);
             EditText etNom = (EditText) findViewById(R.id.etNom);
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             editor.putString("nom", etNom.getText().toString());
 
             editor.commit();
+            startActivity(i);
         }
     }
 }
